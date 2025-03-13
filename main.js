@@ -1,10 +1,10 @@
-// Returns a random DNA base
+// Returns a random DNA base from "A", "T", "C", or "G"
 const returnRandBase = () => {
-  const dnaBases = ['A', 'T', 'C', 'G'];
+  const dnaBases = ["A", "T", "C", "G"];
   return dnaBases[Math.floor(Math.random() * 4)];
 };
 
-// Returns a random single stand of DNA containing 15 bases
+// Generates a random DNA strand with 15 bases
 const mockUpStrand = () => {
   const newStrand = [];
   for (let i = 0; i < 15; i++) {
@@ -12,7 +12,6 @@ const mockUpStrand = () => {
   }
   return newStrand;
 };
-
 
 // Factory function to create a pAequor organism
 const pAequorFactory = (number, arrayOfDna) => {
@@ -32,6 +31,7 @@ const pAequorFactory = (number, arrayOfDna) => {
 
       return this.dna;
     },
+
     // Compares DNA with another specimen and logs similarity percentage
     compareDNA(compare) {
       console.log(`specimen ${this.specimenNum} = ${this.dna}`);
@@ -62,10 +62,43 @@ const pAequorFactory = (number, arrayOfDna) => {
       return survivalRate >= 60;
     },
   };
-    
   return pAequorObject;
 };
 
+// Creating 30 specimens and filtering those likely to survive
+const survivingSpecimens = [];
+for (let i = 0; i < 30; i++) {
+  const organism = pAequorFactory(i, mockUpStrand());
+  if (organism.willLikelySurvive()) {
+    survivingSpecimens.push(organism);
+  }
+}
 
+// Display surviving specimens with their DNA and survival rate
+survivingSpecimens.forEach((organism) => {
+  let count = 0;
+  organism.dna.forEach((base) => {
+    if (base === "C" || base === "G") {
+      count++;
+    }
+  });
+  const survivalRate = Math.round((count / organism.dna.length) * 100);
+  console.log(
+    `Specimen Number: ${organism.specimenNum}, DNA: ${organism.dna.join(
+      ","
+    )} SurvivalRate-${survivalRate}%`
+  );
+});
+
+// Create and compare two organisms
+const organism1 = pAequorFactory(1, mockUpStrand());
+const organism2 = pAequorFactory(2, mockUpStrand());
+// organism1.compareDNA(organism2); // Uncomment to compare DNA
+// console.log(organism1.willLikelySurvive()); // Uncomment to check survival probability
+
+// Testing mutation (Uncomment to see mutation effect)
+// console.log('Original DNA:', organism1.dna);
+// organism1.mutate();
+// console.log('Mutated DNA:', organism1.dna);
 
 
