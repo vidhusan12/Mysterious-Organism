@@ -14,8 +14,28 @@ const mockUpStrand = () => {
 };
 
 
+// Factory function to create a pAequor organism
+const pAequorFactory = (number, arrayOfDna) => {
+  const pAequorObject = {
+    specimenNum: number,
+    dna: arrayOfDna,
 
+    // Mutates a random DNA base to a different one
+    mutate() {
+      const index = Math.floor(Math.random() * this.dna.length);
+      let newBase = returnRandBase();
 
+      while (this.dna[index] === newBase) {
+        newBase = returnRandBase();
+      }
+      this.dna[index] = newBase;
+
+      return this.dna;
+    }
+    
+  };
+  return pAequorObject;
+};
 
 
 
