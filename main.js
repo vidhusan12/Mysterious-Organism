@@ -31,9 +31,38 @@ const pAequorFactory = (number, arrayOfDna) => {
       this.dna[index] = newBase;
 
       return this.dna;
-    }
-    
+    },
+    // Compares DNA with another specimen and logs similarity percentage
+    compareDNA(compare) {
+      console.log(`specimen ${this.specimenNum} = ${this.dna}`);
+      console.log(`specimen ${compare.specimenNum} = ${compare.dna}`);
+      console.log();
+
+      let counter = 0;
+      for (let i = 0; i < this.dna.length; i++) {
+        if (this.dna[i] === compare.dna[i]) {
+          counter++;
+        }
+      }
+      const totalCommon = Math.round((counter / this.dna.length) * 100);
+      console.log(
+        `specimen ${this.specimenNum} and specimen ${compare.specimenNum} have ${totalCommon}% DNA in common`
+      );
+    },
+
+    // Determines if the organism is likely to survive (at least 60% "C" or "G" bases)
+    willLikelySurvive() {
+      let counter = 0;
+      for (let i = 0; i < this.dna.length; i++) {
+        if (this.dna[i] === "C" || this.dna[i] === "G") {
+          counter++;
+        }
+      }
+      const survivalRate = Math.round((counter / this.dna.length) * 100);
+      return survivalRate >= 60;
+    },
   };
+    
   return pAequorObject;
 };
 
